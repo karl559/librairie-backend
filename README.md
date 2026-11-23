@@ -50,3 +50,4 @@ Un petit serveur Node avec HTTPS (VPS, Render, Railway…) et un nom de domaine.
 ## Sécurité déjà prévue
 Relance automatique de l'e-mail toutes les 5 min (24 h max) si l'envoi a échoué · `RETRY_SECONDS` pour changer le délai · admin protégé par clé + limite de requêtes · 
 Prix recalculés côté serveur · une commande payée n'est livrée qu'une fois · liens de téléchargement uniques, 7 jours, 10 essais · limite de requêtes · renvoi admin : `curl -X POST -H "x-admin-key: ..." BASE_URL/api/admin/resend/REF`.
+# librairie-backend
