@@ -1,0 +1,13 @@
+# /etc/caddy/Caddyfile : HTTPS automatique (certificat gratuit renouvelé tout seul)
+# Remplacez votre-domaine.com par votre vrai nom de domaine.
+votre-domaine.com {
+	encode gzip
+	request_body {
+		max_size 110MB
+	}
+	reverse_proxy 127.0.0.1:3000
+}
+
+www.votre-domaine.com {
+	redir https://votre-domaine.com{uri} permanent
+}
