@@ -1,3 +1,8 @@
 node_modules/
 .env
-.npmrc
+.env.*
+!.env.example
+private/
+covers/
+backups/
+*.log

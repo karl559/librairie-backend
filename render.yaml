@@ -1,0 +1,71 @@
+# Blueprint Render : lu automatiquement quand vous créez le service via "Blueprint".
+services:
+  - type: web
+    name: libris
+    runtime: node
+    region: frankfurt
+    plan: free            # "starter" supprime la mise en veille et le blocage SMTP (offre payante)
+    buildCommand: npm ci --omit=dev
+    startCommand: node server.js
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: STORAGE
+        value: supabase
+      - key: DATABASE_SSL
+        value: "1"
+      - key: PAYMENT_PROVIDER
+        value: singpay
+      - key: SINGPAY_TEST_MODE
+        value: "0"
+      - key: SALES_OPEN
+        value: "0"
+      - key: SHOP_NAME
+        value: Libris
+      - key: BASE_URL
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
+      - key: ADMIN_KEY
+        sync: false
+      - key: PAYMENT_SECRET
+        sync: false
+      - key: SINGPAY_CLIENT_ID
+        sync: false
+      - key: SINGPAY_CLIENT_SECRET
+        sync: false
+      - key: SINGPAY_WALLET
+        sync: false
+      - key: MAIL_FROM
+        sync: false
+      - key: MAIL_REPLY_TO
+        sync: false
+      - key: BREVO_API_KEY
+        sync: false
+      - key: LEGAL_NAME
+        sync: false
+      - key: LEGAL_STATUS
+        sync: false
+      - key: LEGAL_ID
+        sync: false
+      - key: ADDRESS
+        sync: false
+      - key: CONTACT_EMAIL
+        sync: false
+      - key: CONTACT_PHONE
+        sync: false
+      - key: HOST_INFO
+        sync: false
+      - key: REFUND_DAYS
+        sync: false
+      - key: REFUND_DELAY
+        sync: false
+      - key: RETENTION
+        sync: false
+      - key: LAW_AND_COURT
+        sync: false
