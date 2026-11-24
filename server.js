@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express"), { Pool } = require("pg");
+const cors = require('cors');
 const storage = require("./lib/storage"), { sendMail } = require("./lib/mailer");
 const sharp = require("sharp"), crypto = require("crypto"), path = require("path"), fs = require("fs"), rateLimit = require("express-rate-limit");
 const { PORT = 3000, DATABASE_URL, BASE_URL = "http://localhost:3000", SMTP_HOST, SMTP_PORT = 587, SMTP_USER, SMTP_PASS,
@@ -138,6 +139,11 @@ async function deliver(o) {
 
 // ---- API ----
 const app = express();
+app.use(cors({
+  origin: '*', // Autorise localhost et votre site Firebase
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'x-admin-key'] // CRUCIAL : autorise votre clé admin
+}));
 app.set("trust proxy", 1);
 app.use(express.json());
 app.get("/healthz", (req, res) => res.type("text/plain").send("ok"));   // pour Render et les moniteurs de disponibilité (ne touche pas la base)
