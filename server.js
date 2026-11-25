@@ -1,13 +1,18 @@
 require("dotenv").config();
 const express = require("express"), { Pool } = require("pg");
-const cors = require('cors');
 const storage = require("./lib/storage"), { sendMail } = require("./lib/mailer");
 const sharp = require("sharp"), crypto = require("crypto"), path = require("path"), fs = require("fs"), rateLimit = require("express-rate-limit");
 const { PORT = 3000, DATABASE_URL, BASE_URL = "http://localhost:3000", SMTP_HOST, SMTP_PORT = 587, SMTP_USER, SMTP_PASS,
   MAIL_FROM, PAYMENT_PROVIDER = "mock", PAYMENT_SECRET = "", ADMIN_KEY = "" } = process.env;
 
 // DATABASE_SSL=1 pour Supabase (connexion chiffrée obligatoire) ; utilisez l'adresse « pooler » de Supabase (IPv4)
-const db = new Pool({ connectionString: DATABASE_URL, ssl: process.env.DATABASE_SSL === "1" ? { rejectUnauthorized: false } : undefined });
+const db = new Pool({
+  connectionString: DATABASE_URL, ssl: process.env.DATABASE_SSL === "1" ? { rejectUnauthorized: false } : undefined,
+  max: +process.env.DB_POOL_MAX || 5,       // peu de connexions : les offres gratuites en limitent le nombre
+  idleTimeoutMillis: 30_000, keepAlive: true
+});
+// Le pooler (Supabase, Render...) coupe les connexions inactives : sans ce gestionnaire, le serveur s'arrêterait net.
+db.on("error", e => console.error("Connexion à la base coupée (elle sera rétablie automatiquement) :", e.message));
 const SHOP_NAME = process.env.SHOP_NAME || "Libris", MAIL_REPLY_TO = process.env.MAIL_REPLY_TO || undefined;
 const ah = fn => (req, res, next) => fn(req, res, next).catch(e => { console.error(e); res.status(500).json({ error: "Erreur serveur" }); });
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -80,6 +85,12 @@ const providers = {
   }
 };
 if (!providers[PAYMENT_PROVIDER]) { console.error("PAYMENT_PROVIDER invalide : " + PAYMENT_PROVIDER + " (mock ou singpay)"); process.exit(1); }
+// Garde-fou : le paiement simulé livrerait les livres SANS paiement. Interdit sur un serveur en ligne (Render, NODE_ENV=production).
+if (PAYMENT_PROVIDER === "mock" && (process.env.RENDER || process.env.NODE_ENV === "production") && process.env.ALLOW_MOCK_PAYMENTS !== "1") {
+  console.error("ARRÊT : PAYMENT_PROVIDER=mock est interdit en ligne, il livrerait les livres SANS paiement. Mettez PAYMENT_PROVIDER=singpay.");
+  process.exit(1);
+}
+if (PAYMENT_PROVIDER === "mock") console.warn("ATTENTION : paiement SIMULÉ (mock). Les livres sont livrés sans paiement : réservé aux essais sur votre PC.");
 if (PAYMENT_PROVIDER === "singpay") {
   if (!(SP.id && SP.secret && SP.wallet)) { console.error("SingPay : renseignez SINGPAY_CLIENT_ID, SINGPAY_CLIENT_SECRET et SINGPAY_WALLET dans .env"); process.exit(1); }
   if (SP.id === SP.secret) { console.error("SingPay : SINGPAY_CLIENT_ID et SINGPAY_CLIENT_SECRET sont identiques (erreur de copie ?)"); process.exit(1); }
@@ -139,11 +150,6 @@ async function deliver(o) {
 
 // ---- API ----
 const app = express();
-app.use(cors({
-  origin: '*', // Autorise localhost et votre site Firebase
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'x-admin-key'] // CRUCIAL : autorise votre clé admin
-}));
 app.set("trust proxy", 1);
 app.use(express.json());
 app.get("/healthz", (req, res) => res.type("text/plain").send("ok"));   // pour Render et les moniteurs de disponibilité (ne touche pas la base)
