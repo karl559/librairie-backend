@@ -162,7 +162,7 @@ app.get("/p/:name", (req, res) => {
   const body = fs.readFileSync(path.join(__dirname, "legal", req.params.name + ".html"), "utf8").replace(/\{\{([A-Z_]+)\}\}/g, (m, k) => {
     const v = k === "SHOP_NAME" ? SHOP_NAME : process.env[k];
     if (v && String(v).trim()) return esc(v);
-    todo.add(k); return `<mark class="todo">[À COMPLÉTER : ${k}]</mark>`;
+    todo.add(k); return "";
   });
   const links = Object.entries(LEGAL).map(([k, t]) => `<a href="/p/${k}">${t}</a>`).join(" · ");
   res.type("html").send(`<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -173,8 +173,7 @@ main{max-width:760px;margin:16px auto;background:#fff;border-radius:10px;padding
 a{color:#e85f00}footer{max-width:760px;margin:0 auto 32px;padding:0 16px;color:#666;font-size:13px}
 mark.todo{background:#fff3cd;color:#8a4b00;padding:1px 5px;border-radius:4px;font-weight:600}.alert{background:#fff3cd;border:1px solid #f0c36d;border-radius:8px;padding:10px 14px;margin-bottom:16px;color:#8a4b00}</style></head>
 <body><header><a href="/">${esc(SHOP_NAME)}</a></header>
-<main>${todo.size ? `<div class="alert"><b>Page incomplète</b> : ${todo.size} information(s) à renseigner dans le fichier .env avant publication (${[...todo].map(esc).join(", ")}).</div>` : ""}${body}</main>
-<footer>${links}</footer></body></html>`);
+<main>${todo.size ? `<div class="alert"><b>Page incomplète</b> : ${todo.size} information(s) à renseigner dans le fichier .env avant publication (${[...todo].map(esc).join(", ")}).</div>` : ""}${body}</main>;
 });
 app.get("/api/config", (req, res) => res.json({ shopName: SHOP_NAME, salesOpen: process.env.SALES_OPEN !== "0" }));
 app.use(express.static(path.join(__dirname, "public")));
