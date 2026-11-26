@@ -173,7 +173,7 @@ main{max-width:760px;margin:16px auto;background:#fff;border-radius:10px;padding
 a{color:#e85f00}footer{max-width:760px;margin:0 auto 32px;padding:0 16px;color:#666;font-size:13px}
 mark.todo{background:#fff3cd;color:#8a4b00;padding:1px 5px;border-radius:4px;font-weight:600}.alert{background:#fff3cd;border:1px solid #f0c36d;border-radius:8px;padding:10px 14px;margin-bottom:16px;color:#8a4b00}</style></head>
 <body><header><a href="/">${esc(SHOP_NAME)}</a></header>
-<main>${todo.size ? `<div class="alert"><b>Page incomplète</b> : ${todo.size} information(s) à renseigner dans le fichier .env avant publication (${[...todo].map(esc).join(", ")}).</div>` : ""}${body}</main>;
+<main>${body}</main>;
 });
 app.get("/api/config", (req, res) => res.json({ shopName: SHOP_NAME, salesOpen: process.env.SALES_OPEN !== "0" }));
 app.use(express.static(path.join(__dirname, "public")));
