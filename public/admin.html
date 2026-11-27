@@ -9,13 +9,13 @@
 @font-face{font-family:Inter;font-weight:400;font-display:swap;src:url(/fonts/inter-400.woff2) format("woff2")}
 @font-face{font-family:Inter;font-weight:600;font-display:swap;src:url(/fonts/inter-600.woff2) format("woff2")}
 @font-face{font-family:Inter;font-weight:700;font-display:swap;src:url(/fonts/inter-700.woff2) format("woff2")}
-:root{--or:#ff6a00;--or2:#e85f00;--tint:#fff3ea;--ink:#222;--mu:#666;--mu2:#999;--bg:#f4f4f4;--ln:#e6e6e6;--red:#e6361b;--ok:#1a9d4f}
+:root{--orb:#d04f00;--or:#ff6a00;--or2:#e85f00;--tint:#fff3ea;--ink:#222;--mu:#666;--mu2:#999;--bg:#f4f4f4;--ln:#e6e6e6;--red:#e6361b;--ok:#1a9d4f}
 *{box-sizing:border-box}[hidden]{display:none!important}
 body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 Inter,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
 .ic{width:1.15em;height:1.15em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.2em;flex:none}
 button,.btn{font:inherit;cursor:pointer;border-radius:8px;padding:8px 14px;border:1px solid #ccc;background:#fff;color:var(--ink);display:inline-flex;align-items:center;gap:6px;font-weight:600}
 button:hover{border-color:var(--or);color:var(--or)}
-button.pri{background:var(--or);border-color:var(--or);color:#fff}button.pri:hover{background:var(--or2);color:#fff}
+button.pri{background:var(--orb);border-color:var(--orb);color:#fff}button.pri:hover{background:#b94600;color:#fff}
 input,select{font:inherit;padding:8px 10px;border:1px solid #ccc;border-radius:8px;background:#fff;color:var(--ink);min-width:0}
 input:focus-visible{outline:2px solid var(--or);border-color:var(--or)}
 header{background:#222;color:#fff;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:5}
@@ -26,11 +26,11 @@ main{max-width:1040px;margin:auto;padding:16px}
 .box{background:#fff;border-radius:10px;padding:16px;margin-bottom:12px}
 .login{max-width:380px;margin:12vh auto}.login input{width:100%;margin:12px 0}.login h2{margin:0}
 .err{color:var(--red);min-height:1.4em;margin:8px 0 0}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:12px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:12px}
 .stats div{background:#fff;border-radius:10px;padding:14px 16px;color:var(--mu);font-size:13px}.stats b{display:block;font-size:24px;color:var(--ink)}
 .tabs{display:flex;gap:4px;border-bottom:1px solid var(--ln);margin-bottom:14px}
 .tabs button{border:0;border-bottom:3px solid transparent;border-radius:0;background:none;padding:10px 16px}
-.tabs button.on{border-color:var(--or);color:var(--or)}
+.tabs button.on{border-color:var(--or);color:var(--orb)}
 .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:8px}
 .row input[name=title],.row input[name=author]{flex:1 1 200px}.row input[type=number]{width:130px}
 label.l{font-size:12px;color:var(--mu);display:flex;flex-direction:column;gap:3px}
@@ -47,6 +47,18 @@ label.chk{display:flex;gap:6px;align-items:center;font-weight:600}
 .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ok);color:#fff;padding:10px 18px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20;max-width:92vw;font-weight:600}
 .toast.on{opacity:1}.toast.bad{background:var(--red)}
 @media(max-width:600px){.bk{flex-direction:column}.thumb{width:120px}}
+.badge{background:var(--red);color:#fff;border-radius:99px;font-size:11px;padding:1px 7px;margin-left:6px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.chips button{border-radius:999px;padding:6px 12px;font-size:13px}
+.chips button.on{background:var(--orb);border-color:var(--orb);color:#fff}
+.stats .go{cursor:pointer}.stats .go:hover{box-shadow:0 0 0 2px var(--or) inset}.stats .alert b{color:var(--red)}
+.o.todo{border-left:4px solid var(--or);padding-left:10px}
+.box.dirty{box-shadow:inset 4px 0 0 var(--or)}
+.lnk{border:0;background:none;padding:0;font-weight:inherit;color:inherit;cursor:copy}.lnk:hover{color:var(--orb)}
+.o a{color:var(--orb);text-decoration:none;font-weight:600;white-space:nowrap}.o a:hover{text-decoration:underline}
+.scroll{overflow-x:auto}
+button:focus-visible,a:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--or);outline-offset:2px}
 </style>
 </head>
 <body>
@@ -88,7 +100,7 @@ label.chk{display:flex;gap:6px;align-items:center;font-weight:600}
   <path d="m21.854 2.147-10.94 10.939" /></symbol><symbol id="i-loader-circle" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-6.219-8.56" /></symbol></svg>
 <section id="login" class="box login">
   <h2>Libris · Administration</h2>
-  <form id="lf"><input id="key" type="password" placeholder="Clé admin (ADMIN_KEY du fichier .env)" autocomplete="current-password" required aria-label="Clé admin">
+  <form id="lf"><input id="key" type="password" placeholder="Clé d’administration" autocomplete="current-password" required aria-label="Clé admin">
   <button class="pri" style="width:100%;justify-content:center">Se connecter</button><p class="err" id="lerr" role="alert"></p></form>
 </section>
 
@@ -97,20 +109,25 @@ label.chk{display:flex;gap:6px;align-items:center;font-weight:600}
   <span><a href="/" target="_blank" rel="noopener"><svg class="ic"><use href="#i-external-link"/></svg>Voir la boutique</a><button id="out"><svg class="ic"><use href="#i-log-out"/></svg>Déconnexion</button></span></header>
 <main>
   <div class="stats" id="stats"></div>
-  <div class="tabs"><button data-tab="books" class="on">Livres</button><button data-tab="orders">Commandes</button></div>
+  <div class="tabs"><button data-tab="books" class="on">Livres</button><button data-tab="orders">Commandes<span class="badge" id="tbadge" hidden></span></button></div>
 
   <section id="tab-books">
     <div class="box"><b>Ajouter un livre</b>
       <form id="nf" style="margin-top:10px"><div class="row"><input name="title" placeholder="Titre" required aria-label="Titre"><input name="author" placeholder="Auteur" required aria-label="Auteur"><input name="category" list="cats" placeholder="Catégorie" required aria-label="Catégorie"></div>
       <div class="row"><label class="l">Prix (FCFA)<input name="price" type="number" min="1" required></label><label class="l">Ancien prix (facultatif)<input name="old_price" type="number" min="1"></label><button class="pri" style="align-self:flex-end"><svg class="ic"><use href="#i-plus"/></svg>Ajouter</button></div></form>
-      <p class="mu" style="margin:8px 0 0">Un livre n’apparaît dans la boutique que lorsqu’il a une <b>vraie image de couverture</b> et au moins un <b>fichier</b> (PDF ou EPUB) à livrer.</p></div>
-    <input id="bq" placeholder="Rechercher un livre…" style="width:100%;margin-bottom:12px" aria-label="Rechercher un livre">
+      <p class="mu" style="margin:8px 0 0">Un livre n’apparaît dans la boutique que lorsqu’il a une <b>vraie image de couverture</b> et au moins un <b>fichier</b> (PDF ou EPUB) à livrer. Couverture conseillée : format portrait 3:4 (ex. 640 × 880 px), 8 Mo maximum.</p></div>
+    <div class="toolbar"><input id="bq" placeholder="Rechercher un livre…" style="flex:1 1 260px" aria-label="Rechercher un livre"><select id="bs" aria-label="Trier les livres"><option value="">Ordre par défaut</option><option value="az">Titre A–Z</option><option value="price">Prix croissant</option></select></div><div class="chips" id="bf"></div>
     <datalist id="cats"></datalist><div id="books"></div>
   </section>
 
   <section id="tab-orders" hidden>
-    <input id="oq" placeholder="Rechercher par e-mail, référence ou livre…" style="width:100%;margin-bottom:12px" aria-label="Rechercher une commande">
+    <div class="box" id="dash"></div>
+    <div class="toolbar"><input id="oq" placeholder="Rechercher par e-mail, téléphone, référence ou livre…" style="flex:1 1 260px" aria-label="Rechercher une commande">
+      <select id="op" aria-label="Période"><option value="all">Toutes les dates</option><option value="today">Aujourd’hui</option><option value="7">7 derniers jours</option><option value="30">30 derniers jours</option></select>
+      <button id="rf" type="button">Actualiser</button><button id="csv" type="button"><svg class="ic"><use href="#i-download"/></svg>Exporter CSV</button></div>
+    <div class="chips" id="of"></div>
     <div class="box" id="orders"></div>
+    <div style="text-align:center;margin-bottom:12px" id="more"></div>
   </section>
 </main>
 <div class="toast" id="msg" role="status" aria-live="polite"></div>
@@ -119,76 +136,148 @@ label.chk{display:flex;gap:6px;align-items:center;font-weight:600}
 <script>
 const $=s=>document.querySelector(s);
 const e=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const norm=s=>String(s??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
 const fmt=n=>Number(n).toLocaleString("fr-FR")+" FCFA";
 const ic=n=>`<svg class="ic"><use href="#i-${n}"/></svg>`;
 const LABEL={pending:"En attente de paiement",paid:"Payée, e-mail non envoyé",delivered:"Livrée",failed:"Échouée"};
-let KEY="",BOOKS=[],ORDERS=[];
+const MAX_COVER=8*1024*1024;      /* taille maximale conseillée pour une couverture */
+const IDLE_MS=30*60*1000;         /* déconnexion automatique après 30 min d'inactivité */
+let KEY="",BOOKS=[],ORDERS=[],DRAFT={},ofilter="all",bfilter="all",shown=25,idle;
 try{KEY=sessionStorage.getItem("libris-key")||""}catch(x){}
 
-function toast(t,bad){const m=$("#msg");m.textContent=t;m.className="toast on"+(bad?" bad":"");clearTimeout(toast.t);toast.t=setTimeout(()=>m.className="toast",4000)}
+function toast(t,bad,sticky){const m=$("#msg");m.textContent=t;m.className="toast on"+(bad?" bad":"");clearTimeout(toast.t);if(!sticky)toast.t=setTimeout(()=>m.className="toast",4000)}
 async function api(p,o={}){
   const h={"x-admin-key":KEY,...(o.headers||{})};let body=o.body;
   if(o.json){h["Content-Type"]="application/json";body=JSON.stringify(o.json)}
   const r=await fetch(p,{method:o.method||"GET",headers:h,body});
   if(r.status===401){logout();throw new Error("Clé admin incorrecte")}
   const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||"Erreur "+r.status);return d}
-function logout(){KEY="";try{sessionStorage.removeItem("libris-key")}catch(x){}$("#app").hidden=true;$("#login").hidden=false}
-async function enter(){$("#login").hidden=true;$("#app").hidden=false;await Promise.all([loadBooks(),loadOrders()])}
+function logout(){KEY="";DRAFT={};clearTimeout(idle);try{sessionStorage.removeItem("libris-key")}catch(x){}$("#app").hidden=true;$("#login").hidden=false}
+const bump=()=>{clearTimeout(idle);if(KEY)idle=setTimeout(()=>{logout();$("#lerr").textContent="Session expirée après 30 minutes d’inactivité."},IDLE_MS)};
+["click","keydown"].forEach(t=>document.addEventListener(t,bump));
+async function enter(){$("#login").hidden=true;$("#app").hidden=false;bump();await Promise.all([loadBooks(),loadOrders()])}
 
 $("#lf").addEventListener("submit",async ev=>{ev.preventDefault();$("#lerr").textContent="";KEY=$("#key").value.trim();
   try{await api("/api/admin/books");try{sessionStorage.setItem("libris-key",KEY)}catch(x){}await enter()}catch(x){$("#lerr").textContent=x.message}});
-$("#out").onclick=logout;
-document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{
-  document.querySelectorAll("[data-tab]").forEach(x=>x.classList.toggle("on",x===b));
-  $("#tab-books").hidden=b.dataset.tab!=="books";$("#tab-orders").hidden=b.dataset.tab!=="orders"});
+$("#out").onclick=()=>{if(Object.keys(DRAFT).length&&!confirm("Des modifications ne sont pas enregistrées. Se déconnecter quand même ?"))return;logout()};
+function tab(n){document.querySelectorAll("[data-tab]").forEach(x=>x.classList.toggle("on",x.dataset.tab===n));
+  $("#tab-books").hidden=n!=="books";$("#tab-orders").hidden=n!=="orders";if(n==="orders")loadOrders().catch(()=>{})}
+document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>tab(b.dataset.tab));
+window.addEventListener("beforeunload",ev=>{if(Object.keys(DRAFT).length){ev.preventDefault();ev.returnValue=""}});
 
 /* ---- Livres ---- */
+const bstate=b=>!b.active?"hidden":b.missing.length?"incomplete":"live";
 const status=b=>!b.active?'<span class="tag">Masqué</span>':b.missing.length?`<span class="tag warn">Invisible : il manque ${b.missing.map(m=>m==="image"?"l’image":"le fichier").join(" et ")}</span>`:'<span class="tag ok">Visible dans la boutique</span>';
+const dv=(b,f)=>DRAFT[b.id]&&DRAFT[b.id][f]!==undefined?DRAFT[b.id][f]:b[f];
 async function loadBooks(){BOOKS=await api("/api/admin/books");renderBooks()}
 function renderBooks(){
-  const q=$("#bq").value.toLowerCase();
+  const q=norm($("#bq").value),srt=$("#bs").value;
+  const cnt={all:BOOKS.length,live:0,incomplete:0,hidden:0};BOOKS.forEach(b=>cnt[bstate(b)]++);
+  $("#bf").innerHTML=[["all","Tous"],["live","Visibles"],["incomplete","Incomplets"],["hidden","Masqués"]].map(([k,l])=>`<button type="button" data-bf="${k}" class="${bfilter===k?"on":""}">${l} (${cnt[k]})</button>`).join("");
+  let L=BOOKS.filter(b=>(bfilter==="all"||bstate(b)===bfilter)&&norm(b.title+b.author+b.category).includes(q));
+  if(srt==="az")L=[...L].sort((a,b)=>a.title.localeCompare(b.title,"fr"));
+  if(srt==="price")L=[...L].sort((a,b)=>a.price-b.price);
   $("#cats").innerHTML=[...new Set(BOOKS.map(b=>b.category))].map(c=>`<option value="${e(c)}">`).join("");
-  $("#books").innerHTML=BOOKS.filter(b=>(b.title+b.author+b.category).toLowerCase().includes(q)).map(b=>`
-  <div class="box" data-id="${b.id}"><div class="bk">
-    <label class="thumb" title="Choisir l’image de couverture">${b.cover?`<img src="${e(b.cover)}" alt="Couverture">`:`<span>${ic("image")}Ajouter l’image</span>`}<input type="file" accept="image/jpeg,image/png,image/webp" data-cover></label>
+  $("#books").innerHTML=L.map(b=>`
+  <div class="box${DRAFT[b.id]?" dirty":""}" data-id="${b.id}"><div class="bk">
+    <label class="thumb" title="Choisir l’image de couverture">${b.cover?`<img src="${e(b.cover)}" alt="Couverture" loading="lazy">`:`<span>${ic("image")}Ajouter l’image</span>`}<input type="file" accept="image/jpeg,image/png,image/webp" data-cover></label>
     <div class="fl">
-      <div class="row"><b class="mu">#${b.id}</b>${status(b)}</div>
-      <div class="row"><input name="title" value="${e(b.title)}" aria-label="Titre"><input name="author" value="${e(b.author)}" aria-label="Auteur"><input name="category" list="cats" value="${e(b.category)}" aria-label="Catégorie"></div>
-      <div class="row"><label class="l">Prix (FCFA)<input name="price" type="number" min="1" value="${b.price}"></label><label class="l">Ancien prix<input name="old_price" type="number" min="1" value="${b.old_price||""}"></label>
-        <label class="chk"><input name="active" type="checkbox" ${b.active?"checked":""}>En vente</label></div>
+      <div class="row"><b class="mu">#${b.id}</b>${status(b)}${DRAFT[b.id]?'<span class="tag warn">Modifications non enregistrées</span>':""}${b.sales>0?`<span class="mu">${b.sales} vendu${b.sales>1?"s":""}</span>`:""}</div>
+      <div class="row"><input name="title" value="${e(dv(b,"title"))}" aria-label="Titre"><input name="author" value="${e(dv(b,"author"))}" aria-label="Auteur"><input name="category" list="cats" value="${e(dv(b,"category"))}" aria-label="Catégorie"></div>
+      <div class="row"><label class="l">Prix (FCFA)<input name="price" type="number" min="1" value="${e(dv(b,"price"))}"></label><label class="l">Ancien prix<input name="old_price" type="number" min="1" value="${e(dv(b,"old_price")||"")}"></label>
+        <label class="chk"><input name="active" type="checkbox" ${dv(b,"active")?"checked":""}>En vente</label></div>
       <div class="row"><button class="pri" data-save>${ic("save")}Enregistrer</button>
         <label class="up">${ic("file-text")}PDF ${b.pdf?`<span class="ok">${ic("circle-check")}</span>`:"(aucun)"}<input type="file" accept=".pdf,application/pdf" data-f="pdf"></label>
         <label class="up">${ic("file-text")}EPUB ${b.epub?`<span class="ok">${ic("circle-check")}</span>`:"(aucun)"}<input type="file" accept=".epub,application/epub+zip" data-f="epub"></label></div>
-    </div></div></div>`).join("")||'<p class="mu">Aucun livre.</p>'}
-$("#bq").addEventListener("input",renderBooks);
+    </div></div></div>`).join("")||'<p class="mu">Aucun livre ne correspond.</p>'}
+$("#bq").addEventListener("input",renderBooks);$("#bs").addEventListener("change",renderBooks);
 const readCard=c=>{const g=n=>c.querySelector(`[name=${n}]`);
   return{title:g("title").value,author:g("author").value,category:g("category").value,price:g("price").value,old_price:g("old_price").value,active:g("active").checked}};
+/* les modifications en cours survivent à la recherche et aux filtres */
+document.addEventListener("input",ev=>{const c=ev.target.closest("#books [data-id]");if(!c||ev.target.type==="file")return;
+  const first=!DRAFT[c.dataset.id];DRAFT[c.dataset.id]=readCard(c);c.classList.add("dirty");
+  if(first){const r=c.querySelector(".row");r.insertAdjacentHTML("beforeend",'<span class="tag warn">Modifications non enregistrées</span>')}});
 
 $("#nf").addEventListener("submit",async ev=>{ev.preventDefault();const d=Object.fromEntries(new FormData(ev.target));d.active=true;
+  if(d.old_price&&Number(d.old_price)<=Number(d.price))return toast("L’ancien prix doit être supérieur au prix actuel.",1);
   try{await api("/api/admin/books",{method:"POST",json:d});ev.target.reset();toast("Livre ajouté. Envoyez maintenant son image et son fichier pour le publier.");await loadBooks();await loadOrders()}catch(x){toast(x.message,1)}});
 
 /* ---- Commandes ---- */
-async function loadOrders(){
-  const d=await api("/api/admin/orders");ORDERS=d.orders;const s=d.stats;
-  $("#stats").innerHTML=`<div><b>${fmt(s.revenue)}</b>Chiffre d’affaires</div><div><b>${s.paid}</b>Commandes payées</div><div><b>${s.pending}</b>En attente de paiement</div><div><b>${s.undelivered}</b>Payées à renvoyer</div>`;
-  renderOrders()}
+const okO=o=>o.status==="paid"||o.status==="delivered";
+const dOf=o=>new Date(o.created_at);
+const sameDay=(a,b)=>a.toDateString()===b.toDateString();
+async function loadOrders(){const d=await api("/api/admin/orders");ORDERS=d.orders;renderDash(d.stats);renderOrders()}
+function renderDash(s){
+  const now=new Date(),sum=f=>ORDERS.filter(o=>okO(o)&&f(dOf(o))).reduce((t,o)=>t+Number(o.total),0);
+  $("#stats").innerHTML=`<div><b>${fmt(s.revenue)}</b>Chiffre d’affaires</div><div><b>${fmt(sum(d=>sameDay(d,now)))}</b>Aujourd’hui</div><div><b>${fmt(sum(d=>now-d<=7*864e5))}</b>7 derniers jours</div>
+    <div><b>${s.paid}</b>Commandes payées</div><div class="go" data-go="pending" title="Voir les commandes en attente"><b>${s.pending}</b>En attente de paiement</div>
+    <div class="go${s.undelivered?" alert":""}" data-go="paid" title="Voir les commandes à renvoyer"><b>${s.undelivered}</b>Payées à renvoyer</div>`;
+  const tb=$("#tbadge");tb.hidden=!s.undelivered;tb.textContent=s.undelivered;
+  /* ventes des 14 derniers jours */
+  const days=[];for(let i=13;i>=0;i--){const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-i);days.push({d,v:0})}
+  ORDERS.filter(okO).forEach(o=>{const t=dOf(o);t.setHours(0,0,0,0);const x=days.find(z=>z.d.getTime()===t.getTime());if(x)x.v+=Number(o.total)});
+  const max=Math.max(...days.map(x=>x.v),1),W=700,bw=W/14,tot=days.reduce((t,x)=>t+x.v,0);
+  const bars=days.map((x,i)=>{const h=Math.round(x.v/max*100),lb=String(x.d.getDate()).padStart(2,"0")+"/"+String(x.d.getMonth()+1).padStart(2,"0");
+    return `<g><title>${lb} : ${fmt(x.v)}</title><rect x="${i*bw+10}" y="${125-h}" width="${bw-20}" height="${Math.max(h,x.v?2:1)}" rx="3" fill="${x.v?"var(--or)":"var(--ln)"}"/>${x.v?`<text x="${i*bw+bw/2}" y="${120-h}" font-size="10" text-anchor="middle" fill="var(--mu)">${Math.round(x.v/1000*10)/10}k</text>`:""}<text x="${i*bw+bw/2}" y="143" font-size="11" text-anchor="middle" fill="var(--mu)">${i%2?"":lb}</text></g>`}).join("");
+  const top=BOOKS.filter(b=>b.sales>0).sort((a,b)=>b.sales-a.sales).slice(0,5);
+  $("#dash").innerHTML=`<b>Ventes des 14 derniers jours</b> <span class="mu">· ${fmt(tot)}</span>
+    <div class="scroll"><svg viewBox="0 0 ${W} 150" role="img" aria-label="Chiffre d’affaires par jour sur 14 jours : ${fmt(tot)} au total" style="width:100%;min-width:520px;height:auto;margin-top:8px">${bars}</svg></div>
+    ${top.length?`<p style="margin:10px 0 0"><b>Meilleures ventes</b> <span class="mu">${top.map((b,i)=>`${i+1}. ${e(b.title)} (${b.sales})`).join(" · ")}</span></p>`:""}`}
+function inPeriod(o){const p=$("#op").value;if(p==="all")return true;const d=dOf(o),n=new Date();return p==="today"?sameDay(d,n):n-d<=Number(p)*864e5}
+const baseList=()=>{const q=norm($("#oq").value);return ORDERS.filter(o=>inPeriod(o)&&norm(o.email+" "+o.ref+" "+(o.books||"")+" "+o.phone).includes(q))};
+const filtered=()=>baseList().filter(o=>ofilter==="all"||o.status===ofilter);
+const waLink=p=>{const n=String(p).replace(/\D/g,"").replace(/^(00)?241/,"").replace(/^0/,"");return n.length===8?"https://wa.me/241"+n:""};
 function renderOrders(){
-  const q=$("#oq").value.toLowerCase();
-  const L=ORDERS.filter(o=>(o.email+o.ref+(o.books||"")).toLowerCase().includes(q));
-  $("#orders").innerHTML=L.map(o=>`<div class="o"><b>${e(o.email)}</b> · ${fmt(o.total)} · ${o.operator==="airtel"?"Airtel Money":"Moov Money"} · <span class="mu">${e(o.phone)}</span><br>
-    ${e(o.books||"")}<br><span class="tag ${e(o.status)}">${LABEL[o.status]||e(o.status)}</span> <span class="mu">${e(o.ref)} · ${new Date(o.created_at).toLocaleString("fr-FR")}</span>
-    ${o.status==="paid"||o.status==="delivered"?` <button data-resend="${e(o.ref)}">${ic("send")}Renvoyer l’e-mail</button>`:""}</div>`).join("")||'<p class="mu">Aucune commande.</p>'}
-$("#oq").addEventListener("input",renderOrders);
+  const base=baseList(),c={all:base.length,pending:0,paid:0,delivered:0,failed:0};base.forEach(o=>{if(c[o.status]!==undefined)c[o.status]++});
+  $("#of").innerHTML=[["all","Toutes"],["pending","En attente"],["paid","À renvoyer"],["delivered","Livrées"],["failed","Échouées"]].map(([k,l])=>`<button type="button" data-of="${k}" class="${ofilter===k?"on":""}">${l} (${c[k]})</button>`).join("");
+  const L=filtered(),rev=L.filter(okO).reduce((t,o)=>t+Number(o.total),0);
+  $("#orders").innerHTML=(L.length?`<p class="mu" style="margin:0 0 4px">${L.length} commande${L.length>1?"s":""} · ${fmt(rev)} encaissés</p>`:"")+
+  (L.slice(0,shown).map(o=>{const w=waLink(o.phone);return `<div class="o${o.status==="paid"?" todo":""}"><button class="lnk" data-copy="${e(o.email)}" title="Copier l’e-mail"><b>${e(o.email)}</b></button> · ${fmt(o.total)} · ${o.operator==="airtel"?"Airtel Money":"Moov Money"} · <span class="mu">${e(o.phone)}</span>${w?` <a href="${w}" target="_blank" rel="noopener">${ic("send")}WhatsApp</a>`:""}<br>
+    ${e(o.books||"")}<br><span class="tag ${e(o.status)}">${LABEL[o.status]||e(o.status)}</span> <button class="lnk mu" data-copy="${e(o.ref)}" title="Copier la référence">${e(o.ref)}</button> <span class="mu">· ${dOf(o).toLocaleString("fr-FR")}</span>
+    ${okO(o)?` <button data-resend="${e(o.ref)}">${ic("send")}Renvoyer l’e-mail</button>`:""}</div>`}).join("")||'<p class="mu">Aucune commande.</p>');
+  $("#more").innerHTML=L.length>shown?`<button type="button" data-more>Afficher plus (${L.length-shown} restantes)</button>`:""}
+const resetShown=()=>{shown=25;renderOrders()};
+$("#oq").addEventListener("input",resetShown);$("#op").addEventListener("change",resetShown);
+$("#rf").onclick=async()=>{try{await loadOrders();toast("Liste actualisée")}catch(x){toast(x.message,1)}};
+$("#csv").onclick=()=>{const L=filtered();if(!L.length)return toast("Aucune commande à exporter.",1);
+  const cols=[["Référence",o=>o.ref],["Date",o=>dOf(o).toLocaleString("fr-FR")],["E-mail",o=>o.email],["Téléphone",o=>o.phone],["Opérateur",o=>o.operator==="airtel"?"Airtel Money":"Moov Money"],["Montant (FCFA)",o=>o.total],["Statut",o=>LABEL[o.status]||o.status],["Livres",o=>o.books||""]];
+  const q=v=>{v=String(v??"");if(/^[=+\-@\t\r]/.test(v))v="'"+v;return '"'+v.replace(/"/g,'""')+'"'};
+  const csv="\ufeff"+[cols.map(c=>q(c[0])).join(";"),...L.map(o=>cols.map(c=>q(c[1](o))).join(";"))].join("\r\n");
+  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));a.download="commandes-"+new Date().toISOString().slice(0,10)+".csv";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  toast(L.length+" commande(s) exportée(s)")};
+/* actualisation automatique de la liste des commandes (toutes les 30 s, onglet ouvert) */
+setInterval(()=>{if(KEY&&!document.hidden&&!$("#tab-orders").hidden)loadOrders().catch(()=>{})},30000);
+
+/* ---- Envoi de fichiers avec progression ---- */
+function sendFile(path,f,label){return new Promise((res,rej)=>{
+  const x=new XMLHttpRequest();x.open("POST",path);x.setRequestHeader("x-admin-key",KEY);x.setRequestHeader("Content-Type",f.type||"application/octet-stream");
+  x.upload.onprogress=ev=>{if(ev.lengthComputable)toast("Envoi de "+label+"… "+Math.round(ev.loaded/ev.total*100)+" %",0,1)};
+  x.onload=()=>{let d={};try{d=JSON.parse(x.responseText)}catch(z){}
+    if(x.status===401){logout();return rej(new Error("Clé admin incorrecte"))}
+    x.status>=200&&x.status<300?res(d):rej(new Error(d.error||"Erreur "+x.status))};
+  x.onerror=()=>rej(new Error("Connexion perdue pendant l’envoi. Réessayez."));
+  x.send(f)})}
 
 /* ---- Actions ---- */
-document.addEventListener("click",async ev=>{const t=ev.target.closest("button");if(!t)return;
-  if(t.dataset.save!==undefined){const c=t.closest("[data-id]");
-    try{await api("/api/admin/books/"+c.dataset.id,{method:"PUT",json:readCard(c)});toast("Enregistré");await loadBooks()}catch(x){toast(x.message,1)}}
+document.addEventListener("click",async ev=>{const g=ev.target.closest("[data-go]");
+  if(g){ofilter=g.dataset.go;shown=25;tab("orders");renderOrders();return}
+  const t=ev.target.closest("button");if(!t)return;
+  if(t.dataset.bf){bfilter=t.dataset.bf;renderBooks();return}
+  if(t.dataset.of){ofilter=t.dataset.of;shown=25;renderOrders();return}
+  if(t.dataset.more!==undefined){shown+=25;renderOrders();return}
+  if(t.dataset.copy){try{await navigator.clipboard.writeText(t.dataset.copy);toast("Copié : "+t.dataset.copy)}catch(x){toast("Copie impossible",1)}return}
+  if(t.dataset.save!==undefined){const c=t.closest("[data-id]"),d=readCard(c);
+    if(!(Number(d.price)>0))return toast("Indiquez un prix valide.",1);
+    if(d.old_price&&Number(d.old_price)<=Number(d.price))return toast("L’ancien prix doit être supérieur au prix actuel.",1);
+    try{await api("/api/admin/books/"+c.dataset.id,{method:"PUT",json:d});delete DRAFT[c.dataset.id];toast("Enregistré");await loadBooks()}catch(x){toast(x.message,1)}}
   if(t.dataset.resend){if(!confirm("Renvoyer les liens de téléchargement par e-mail à ce client ?"))return;
     try{await api("/api/admin/resend/"+t.dataset.resend,{method:"POST"});toast("E-mail renvoyé");await loadOrders()}catch(x){toast(x.message,1)}}});
 document.addEventListener("change",async ev=>{const t=ev.target,f=t.files&&t.files[0];if(!f||!(t.dataset.f||t.dataset.cover!==undefined))return;
-  const c=t.closest("[data-id]"),isCover=t.dataset.cover!==undefined;toast("Envoi de "+f.name+"…");
-  try{await api(`/api/admin/books/${c.dataset.id}/${isCover?"cover":"file?f="+t.dataset.f}`,{method:"POST",headers:{"Content-Type":f.type||"application/octet-stream"},body:f});
+  const c=t.closest("[data-id]"),isCover=t.dataset.cover!==undefined;
+  if(isCover&&f.size>MAX_COVER){t.value="";return toast("Image trop lourde ("+(f.size/1048576).toFixed(1)+" Mo). Maximum conseillé : 8 Mo.",1)}
+  if(!isCover&&!f.name.toLowerCase().endsWith("."+t.dataset.f)){t.value="";return toast("Ce fichier n’est pas un "+t.dataset.f.toUpperCase()+".",1)}
+  const label=isCover?"l’image":t.dataset.f.toUpperCase();toast("Envoi de "+label+"… 0 %",0,1);
+  try{await sendFile(`/api/admin/books/${c.dataset.id}/${isCover?"cover":"file?f="+t.dataset.f}`,f,label);
     toast(isCover?"Image enregistrée":"Fichier "+t.dataset.f.toUpperCase()+" enregistré");await loadBooks()}catch(x){toast(x.message,1);t.value=""}});
 
 if(KEY)api("/api/admin/books").then(enter).catch(()=>{});
