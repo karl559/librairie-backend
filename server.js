@@ -58,8 +58,13 @@ const providers = {
         // Délai dépassé / coupure : la demande a peut-être atteint SingPay. Ne JAMAIS conclure à un échec ici.
         throw Object.assign(new Error("SingPay injoignable : " + ((e.cause && e.cause.code) || e.name)), { ambiguous: true });
       }
-      if (r.http !== 200 || !(r.data && r.data.status && r.data.status.success))
-        throw new Error("SingPay a refusé le paiement : HTTP " + r.http + " " + JSON.stringify(r.data).slice(0, 2500));
+      if (r.http !== 200 || !(r.data && r.data.status && r.data.status.success)) {
+        // On journalise seulement le verdict de SingPay (code + message) et la référence, pas tout le portefeuille.
+        const st = r.data && r.data.status, code = Number(st && (st.code || st.result_code)) || r.http;
+        const err = new Error("SingPay a refusé le paiement : HTTP " + r.http + " " + JSON.stringify({ status: st || r.data, ref }).slice(0, 800));
+        if (code >= 500) err.userMessage = "Le service de l'opérateur est momentanément indisponible. Réessayez dans quelques minutes.";
+        throw err;
+      }
     },
     // Source de vérité : on interroge SingPay lui-même (jamais le navigateur, jamais le seul contenu d'un rappel).
     // Retourne "paid", "failed" ou "pending". En cas de doute : "pending", donc aucune livraison.
@@ -201,7 +206,7 @@ app.post("/api/checkout", rateLimit({ windowMs: 60_000, limit: +process.env.CHEC
       console.error(e);
       if (e.ambiguous) return res.status(202).json({ ref, total, uncertain: true }); // la vérification automatique tranchera
       await db.query("UPDATE orders SET status='failed' WHERE ref=$1", [ref]);
-      return res.status(502).json({ error: "Paiement indisponible" });
+      return res.status(502).json({ error: e.userMessage || "Paiement indisponible" });
     }
     res.json({ ref, total });
   } catch (e) { console.error(e); res.status(500).json({ error: "Erreur serveur" }); }
