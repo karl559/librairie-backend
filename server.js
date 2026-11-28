@@ -59,7 +59,7 @@ const providers = {
         throw Object.assign(new Error("SingPay injoignable : " + ((e.cause && e.cause.code) || e.name)), { ambiguous: true });
       }
       if (r.http !== 200 || !(r.data && r.data.status && r.data.status.success))
-        throw new Error("SingPay a refusé le paiement : HTTP " + r.http + " " + JSON.stringify(r.data).slice(0, 300));
+        throw new Error("SingPay a refusé le paiement : HTTP " + r.http + " " + JSON.stringify(r.data).slice(0, 2500));
     },
     // Source de vérité : on interroge SingPay lui-même (jamais le navigateur, jamais le seul contenu d'un rappel).
     // Retourne "paid", "failed" ou "pending". En cas de doute : "pending", donc aucune livraison.
